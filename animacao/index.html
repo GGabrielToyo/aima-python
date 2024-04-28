@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animação de Objeto Quadrado</title>
+</head>
+
+<body>
+    <section>
+
+        <div class="canto" id="direita">
+            <img src="cara.png" class="pessoas" id="pai-direita">
+            <img src="garoto.png" class="pessoas" id="filho-direita">
+            <img src="garoto (1).png" class="pessoas" id="filho-1-direita">
+            <img src="mae.png" class="pessoas" id="mae-direita">
+            <img src="menina.png" class="pessoas" id="filha-direita">
+            <img src="menina (1).png" class="pessoas" id="filha-1-direita">
+            <img src="policial.png" class="pessoas" id="policial-direita">
+            <img src="terrorista.png" class="pessoas" id="bandido-direita">
+        </div>
+        <div class="container">
+            <div id="parabens"
+                style="display: none ;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                <h1>PARABÉNS</h1>
+            </div>
+            <img src="barco.png" id="barco">
+
+        </div>
+        <div class="canto" id="esquerda">
+            <img src="cara.png" class="pessoas" id="pai-esquerda">
+            <img src="garoto.png" class="pessoas" id="filho-esquerda">
+            <img src="garoto (1).png" class="pessoas" id="filho-1-esquerda">
+            <img src="mae.png" class="pessoas" id="mae-esquerda">
+            <img src="menina.png" class="pessoas" id="filha-esquerda">
+            <img src="menina (1).png" class="pessoas" id="filha-1-esquerda">
+            <img src="policial.png" class="pessoas" id="policial-esquerda">
+            <img src="terrorista.png" class="pessoas" id="bandido-esquerda">
+        </div>
+    </section>
+    <div id="div-botao">
+        <button onclick="movePessoa()">Executar movimento</button>
+    </div>
+</body>
+
+</html>
+<style>
+    h1 {
+        font-size: 5rem;
+        color: #fff;
+        font-family: 'Arial';
+        animation: piscar 1s infinite;
+    }
+
+    @keyframes piscar {
+        0% {
+            color: rgb(255, 0, 0);
+        }
+
+        25% {
+            color: rgb(0, 255, 0);
+        }
+
+        50% {
+            color: rgb(0, 0, 255);
+        }
+
+        75% {
+            color: rgb(255, 255, 0);
+        }
+
+        100% {
+            color: rgb(255, 0, 255);
+        }
+    }
+
+    #pai-direita {
+        display: block;
+    }
+
+    #filho-direita {
+        display: block;
+    }
+
+    #filho-1-direita {
+        display: block;
+    }
+
+    #mae-direita {
+        display: block;
+    }
+
+    #filha-direita {
+        display: block;
+    }
+
+    #filha-1-direita {
+        display: block;
+    }
+
+    #policial-direita {
+        display: block;
+    }
+
+    #ladrao-direita {
+        display: block;
+    }
+
+    #pai-esquerda {
+        display: none;
+    }
+
+    #filho-esquerda {
+        display: none;
+    }
+
+    #filho-1-esquerda {
+        display: none;
+    }
+
+    #mae-esquerda {
+        display: none;
+    }
+
+    #filha-esquerda {
+        display: none;
+    }
+
+    #filha-1-esquerda {
+        display: none;
+    }
+
+    #policial-esquerda {
+        display: none;
+    }
+
+    #bandido-esquerda {
+        display: none;
+    }
+
+    body {
+        display: flex;
+        height: 100vh;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    #esquerda {
+        align-content: flex-end;
+    }
+
+    .pessoas {
+        height: 50px;
+        width: 50px;
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+    .canto {
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: space-around;
+        display: flex;
+        width: 15%;
+        background-color: rgba(165, 42, 42, 0.822);
+    }
+
+    button {
+        width: 1000px;
+        height: 100px;
+
+    }
+
+    section {
+        display: flex;
+        width: 100%;
+        height: 700px;
+    }
+
+    .container {
+        width: 70%;
+        height: 100%;
+        background-color: aqua;
+        border: 1px solid black;
+        position: relative;
+        overflow: hidden;
+    }
+
+    #barco {
+        width: 200px;
+        height: 200px;
+        background-color: aqua;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .move-left {
+        animation: moveLeft 2s linear forwards;
+    }
+
+    .move-right {
+        animation: moveRight 2s linear forwards;
+    }
+
+    @keyframes moveLeft {
+        from {
+            left: calc(100% - 200px);
+        }
+
+        to {
+            left: 0;
+        }
+    }
+
+    @keyframes moveRight {
+        from {
+            left: 0;
+        }
+
+        to {
+            left: calc(100% - 200px);
+        }
+    }
+
+    .move-left {
+        animation: moveLeft 2s linear forwards;
+    }
+
+    .move-right {
+        animation: moveRight 2s linear forwards;
+    }
+
+    @keyframes moveLeft1 {
+        from {
+            justify-content: flex-end;
+        }
+
+        to {
+            justify-content: flex-start;
+        }
+    }
+
+    @keyframes moveRight1 {
+        from {
+            justify-content: flex-start;
+            ;
+        }
+
+        to {
+            justify-content: flex-end;
+        }
+    }
+</style>
+
+<script>
+    const jsonUrl = 'dados.json';
+    let listaDeListas
+
+    function atribuirListaDeListas(dados) {
+    listaDeListas = dados;
+}
+
+    async function carregarJSON() {
+        try {
+            const resposta = await fetch(jsonUrl);
+
+            if (!resposta.ok) {
+                throw new Error(`Erro ao carregar o arquivo JSON: ${resposta.status}`);
+            }
+
+            const dados = await resposta.json();
+
+            atribuirListaDeListas(dados);
+
+        } catch (erro) {
+            console.error('Erro ao carregar o arquivo JSON:', erro);
+        }
+
+    }
+
+    var jogadas = 1;
+
+    let listaDePessoasDireita = ["#pai-direita", "#filho-direita", "#filho-1-direita", "#mae-direita", "#filha-direita", "#filha-1-direita", "#policial-direita", "#bandido-direita"];
+
+    let listaDePessoasEsquerda = ["#pai-esquerda", "#filho-esquerda", "#filho-1-esquerda", "#mae-esquerda", "#filha-esquerda", "#filha-1-esquerda", "#policial-esquerda", "#bandido-esquerda"];
+
+    function moverBarco() {
+        let barco = document.querySelector('#barco');
+
+        if (barco.classList.contains('move-right')) {
+            barco.classList.remove('move-right');
+            barco.classList.add('move-left');
+        } else {
+            barco.classList.remove('move-left');
+            barco.classList.add('move-right');
+        }
+    }
+
+    function removePessoaDireita(index) {
+        document.querySelector(listaDePessoasDireita[index]).style.display = 'none';
+    }
+
+    function removePessoaEsquerda(index) {
+        document.querySelector(listaDePessoasEsquerda[index]).style.display = 'none';
+    }
+
+    function adicionaPessoaDireita(index) {
+        document.querySelector(listaDePessoasDireita[index]).style.display = 'block';
+    }
+
+    function adicionaPessoaEsquerda(index) {
+        document.querySelector(listaDePessoasEsquerda[index]).style.display = 'block';
+    }
+
+    function trocarEstado() {
+        estado = listaDeListas[jogadas];
+
+        for (let i = 0; i < listaDePessoasDireita.length; i++) {
+            if (estado[i] == 1) {
+                removePessoaDireita(i);
+                setTimeout(function () {
+                    adicionaPessoaEsquerda(i);
+                }, 2000);
+            } else {
+                removePessoaEsquerda(i);
+                setTimeout(function () {
+                    adicionaPessoaDireita(i);
+                }, 2000);
+            }
+        }
+
+        if (estado.every((e) => e == 1)) {
+            document.querySelector('#parabens').style.display = 'block';
+            return;
+        }
+    }
+
+    function movePessoa() {
+        moverBarco();
+        trocarEstado();
+        jogadas++;
+    }
+    carregarJSON()
+    
+
+
+
+
+
+
+
+</script>

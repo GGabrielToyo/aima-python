@@ -1,8 +1,8 @@
 from collections import deque
 import sys
 
-import pygame
-from pygame.locals import *
+#import pygame
+#from pygame.locals import *
 from sys import exit
 
 class Problem:
