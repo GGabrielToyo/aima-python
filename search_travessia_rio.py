@@ -1,12 +1,6 @@
 from collections import deque
 import sys
 
-<<<<<<< HEAD
-=======
-#import pygame
-#from pygame.locals import *
-from sys import exit
->>>>>>> d30c9cf90175bba7d565569cb27732959d0912e2
 
 class Problem:
     def __init__(self, initial, goal, grafo):
