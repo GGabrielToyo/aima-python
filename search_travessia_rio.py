@@ -1,9 +1,6 @@
 from collections import deque
 import sys
 
-import pygame
-from pygame.locals import *
-from sys import exit
 
 class Problem:
     def __init__(self, initial, goal, grafo):
@@ -112,10 +109,3 @@ def busca_em_profundidade_limitada_interativa(problem):
         result = busca_em_profundidade_limitada(problem, profundidade)
         if result != 'Limite não atingiu objetivo':
             return result
-
-def display(solucao):
-    pygame.init()
-    largura = 640
-    altura = 480
-
-    tela = pygame.display.set_moed((largura, altura))
