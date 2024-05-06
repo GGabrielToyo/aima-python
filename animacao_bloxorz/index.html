@@ -172,54 +172,64 @@
             <div class="cell" id="preto">preto</div>
         </div>
     </div>
-    <script>
-
-        const jsonUrl = 'dados.json';
-        let caminho
-
-        function atribuirListaDeListas(dados) {
-            caminho = dados;
-        }
-
-        async function carregarJSON() {
-            try {
-                const resposta = await fetch(jsonUrl);
-
-                if (!resposta.ok) {
-                    throw new Error(`Erro ao carregar o arquivo JSON: ${resposta.status}`);
-                }
-
-                const dados = await resposta.json();
-
-                atribuirListaDeListas(dados);
-
-            } catch (erro) {
-                console.error('Erro ao carregar o arquivo JSON:', erro);
-            }
-
-        }
-        
-        // Função para alterar a cor das células de acordo com o caminho
-        function changeCellColor() {
-            let delay = 2000; // Delay inicial de 1 segundo
-
-            caminho.forEach((cells, index) => {
-                setTimeout(() => {
-                    // Altera a cor das células no caminho para verde
-                    cells.forEach(cellId => {
-                        const cell = document.getElementById(cellId);
-                        if (cell) {
-                            cell.style.backgroundColor = 'green';
-                        }
-                    });
-                }, delay * index); // Aplica um atraso proporcional ao índice
-            });
-        }
-
-        // Chamada da função para alterar a cor das células
-        changeCellColor();
-        carregarJSON();
-    </script>
 </body>
 
 </html>
+<script>
+    async function changeCellColor() {
+    let delay = 2000;
+    let currentStep = 0;
+
+    try {
+        const response = await fetch('dados.json'); // Faz a requisição para o arquivo JSON
+        const caminho = await response.json(); // Converte a resposta em um objeto JavaScript
+
+        caminho.forEach((cells, index) => {
+            setTimeout(() => {
+                if (index > 0) {
+                    caminho[index - 1].forEach(prevCellId => {
+                        const prevCell = document.getElementById(prevCellId);
+                        if (prevCell) {
+                            prevCell.style.backgroundColor = 'green';
+                        }
+                    });
+                }
+
+                cells.forEach(cellId => {
+                    const cell = document.getElementById(cellId);
+                    if (cell) {
+                        cell.style.backgroundColor = 'blue';
+                    }
+                });
+
+                currentStep = index;
+            }, delay * index);
+        });
+
+        setTimeout(() => {
+            caminho[currentStep].forEach(lastCellId => {
+                const lastCell = document.getElementById(lastCellId);
+                if (lastCell) {
+                    lastCell.style.backgroundColor = 'green';
+                }
+            });
+        }, delay * caminho.length);
+    } catch (error) {
+        console.error('Erro ao carregar ou processar dados:', error);
+    }
+}
+async function carregarJSON() {
+    try {
+        const response = await fetch('dados.json'); // Faz a requisição para o arquivo JSON
+        const caminho = await response.json(); // Converte a resposta em um objeto JavaScript
+        
+        // Chama a função para alterar a cor das células com o caminho carregado
+        changeCellColor(caminho);
+    } catch (error) {
+        console.error('Erro ao carregar ou processar dados:', error);
+    }
+}
+
+// Chamada da função para carregar o JSON e iniciar a alteração da cor das células
+carregarJSON();
+</script>
