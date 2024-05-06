@@ -418,7 +418,7 @@ def astar_search(problem, h=None, display=False):
     else in your Problem subclass."""
     h = memoize(h or problem.h, 'h')
     return best_first_graph_search(problem, lambda n: n.path_cost + h(n), display)
-
+    
 
 # ______________________________________________________________________________
 # A* heuristics 

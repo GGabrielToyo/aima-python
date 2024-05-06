@@ -1,6 +1,8 @@
 from collections import deque
 import sys
 
+from utils import *
+
 
 class Problem:
     def __init__(self, initial, goal, grafo):
@@ -109,3 +111,93 @@ def busca_em_profundidade_limitada_interativa(problem):
         result = busca_em_profundidade_limitada(problem, profundidade)
         if result != 'Limite não atingiu objetivo':
             return result
+
+#busca gulosa com heuristica
+def busca_gulosa(problem, heuristica):
+    inicio = problem.initial
+    resposta = problem.goal
+    noAtual = inicio
+    lista_de_abertos = []
+    lista_de_fechados = [inicio]
+    lista_de_pesos_abertos = []
+    pai = {inicio: None}
+
+    while noAtual != resposta:
+        i = 0
+        acumulaHeuristica = 0
+
+        while len(problem.grafo[noAtual]) > i:
+            proximoNo = problem.grafo[noAtual][i]
+            if problem.grafo[noAtual][i] not in lista_de_fechados:
+                lista_de_abertos.insert(0,problem.grafo[noAtual][i])#preenche a lista de filhos do "noAtual" 
+                acumulaHeuristica = heuristica[problem.grafo[noAtual][i]][0]#soma o valor da heuristica com o peso de cada nó. Essa conta é o que define esse metodo, pois a partir dele o algoritmo escolhe o proximo nó
+                lista_de_pesos_abertos.insert(0, acumulaHeuristica)#preenche uma lista com o peso mais a heuristica de cada nó 
+                pai[proximoNo] = noAtual
+            i += 1
+
+        menor = min(lista_de_pesos_abertos)#Escolhe o nó com o menor valor de heuristica + peso da lista
+        indexMenor = lista_de_pesos_abertos.index(menor)#armazena o index(o numero da posição) do menor valor
+        lista_de_pesos_abertos.remove(menor)
+        noAtual = lista_de_abertos[indexMenor]#escolhe como "noAtual" o nó com o menor valor de heuristica + peso
+        lista_de_abertos.remove(noAtual)
+        lista_de_fechados.append(noAtual)
+
+    caminho = []
+    passo = resposta
+    while passo is not None:
+        caminho.append(passo)
+        passo = pai[passo]
+    caminho.reverse()
+    return caminho
+
+#busca A* com heuristica
+def AEstrela(problem, pesos, heuristica):
+    resposta = problem.goal
+    noAtual = problem.initial
+    lista_de_abertos = [problem.initial]
+    lista_de_fechados = []
+    pai = {problem.initial: None}
+    g = {problem.initial: 0}  # Dicionário para armazenar o custo acumulado até cada nó
+
+    while noAtual != resposta:
+        i = 0
+
+        while len(problem.grafo[noAtual]) > i:
+            proximoNo = problem.grafo[noAtual][i]
+            custoAresta = pesos[noAtual][i]
+            custoAcumulado = g[noAtual] + custoAresta
+            if proximoNo not in lista_de_fechados:
+                # Calcula o valor da função de avaliação f(n) = g(n) + h(n)
+                fn_proximoNo = custoAcumulado + heuristica[proximoNo][0]
+                # Verifica se encontramos um caminho melhor para o próximo nó
+                if proximoNo not in g or custoAcumulado < g[proximoNo]:
+                    g[proximoNo] = custoAcumulado
+                    pai[proximoNo] = noAtual
+                    if proximoNo not in lista_de_abertos:
+                        lista_de_abertos.append(proximoNo)
+            i += 1
+
+        # Encontra o próximo nó a ser expandido com o menor valor de f(n) = g(n) + h(n)
+        menorFn = float('inf')
+        proximoNo = None
+        for node in lista_de_abertos:
+            if (node in g) and (g[node] + heuristica[node][0] < menorFn):
+                menorFn = g[node] + heuristica[node][0]
+                proximoNo = node
+
+        if proximoNo is None:
+            # Caso não haja mais nós para expandir (caminho inalcançável)
+            break
+
+        noAtual = proximoNo
+        lista_de_abertos.remove(noAtual)
+        lista_de_fechados.append(noAtual)
+
+    # Reconstrói o caminho do objetivo até o início
+    caminho = []
+    passo = resposta
+    while passo is not None:
+        caminho.append(passo)
+        passo = pai[passo]
+    caminho.reverse()
+    return caminho
