@@ -173,41 +173,32 @@
         </div>
     </div>
     <script>
-        // Lista de caminhos definida com endereços de células
-        const caminho = [
-            ['h1'],
-            ['f1', 'g1'],
-            ['f2', 'g2'],
-            ['h2'],
-            ['h3', 'h4'],
-            ['h5'],
-            ['h6', 'h7'],
-            ['h8'],
-            ['h9', 'h10'],
-            ['g3', 'g4'],
-            ['g5'],
-            ['h11', 'i6'],
-            ['h10', 'i5'],
-            ['h9', 'i4'],
-            ['g3'],
-            ['g4', 'g5'],
-            ['h10', 'h11'],
-            ['i5', 'i6'],
-            ['i4'],
-            ['g3', 'h9'],
-            ['g4', 'h10'],
-            ['g5', 'h11'],
-            ['g6', 'h12'],
-            ['g7', 'h13'],
-            ['g8', 'h14'],
-            ['f3'],
-            ['d7', 'e3'],
-            ['c8'],
-            ['c6', 'c7'],
-            ['b6', 'b7'],
-            ['b5']
-        ];
 
+        const jsonUrl = 'dados.json';
+        let caminho
+
+        function atribuirListaDeListas(dados) {
+            caminho = dados;
+        }
+
+        async function carregarJSON() {
+            try {
+                const resposta = await fetch(jsonUrl);
+
+                if (!resposta.ok) {
+                    throw new Error(`Erro ao carregar o arquivo JSON: ${resposta.status}`);
+                }
+
+                const dados = await resposta.json();
+
+                atribuirListaDeListas(dados);
+
+            } catch (erro) {
+                console.error('Erro ao carregar o arquivo JSON:', erro);
+            }
+
+        }
+        
         // Função para alterar a cor das células de acordo com o caminho
         function changeCellColor() {
             let delay = 2000; // Delay inicial de 1 segundo
@@ -227,6 +218,7 @@
 
         // Chamada da função para alterar a cor das células
         changeCellColor();
+        carregarJSON();
     </script>
 </body>
 
